@@ -18,8 +18,6 @@ body {
     width: 100vw;
     height: 100vh;
     max-width: 480px;
-    border-radius: 2vh;
-    padding: 0.8vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,17 +26,16 @@ body {
     width: 100%;
     height: 100%;
     background: #fff;
-    border-radius: 2vh;
     display: flex;
     flex-direction: column;
 }
 .header {
     flex: 0 0 auto;
-    height: 7vh;
+    height: 8vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 3px solid #ed6c00;
     position: relative;
     background: #f8f8f8;
 }
@@ -53,81 +50,121 @@ body {
     padding: 0;
 }
 .header-title {
-    font-size: 7vw; /* ← 少し大きく */
+    font-size: 6vw;
     font-weight: bold;
     color: #333;
+}
+.menu-button {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+.menu-icon {
+    width: 24px;
+    height: 2px;
+    background-color: #333;
+    display: block;
+    position: relative;
+}
+.menu-icon::before,
+.menu-icon::after {
+    content: "";
+    width: 24px;
+    height: 2px;
+    background-color: #333;
+    position: absolute;
+    left: 0;
+}
+.menu-icon::before {
+    top: -7px;
+}
+.menu-icon::after {
+    top: 7px;
+}
+.dropdown-menu {
+    position: absolute;
+    top: 8vh;
+    right: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0.5vh;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+}
+.dropdown-menu a {
+    padding: 1vh 2vw;
+    text-decoration: none;
+    color: #333;
+    font-size: 4vw;
+    border-bottom: 1px solid #eee;
+}
+.dropdown-menu a:last-child {
+    border-bottom: none;
+}
+.dropdown-menu a:hover {
+    background: #f2f2f2;
 }
 .main-content {
     flex: 1 1 auto;
     display: grid;
     grid-template-rows: repeat(5, 1fr);
-    gap: 2vh;
+    gap: 1vh;
     padding: 1vh;
     background: #f8f8f8;
 }
 .notice-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     background: #fff;
     border-radius: 1vh;
     padding: 1vh;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     border-left: 0.6vh solid #ccc;
-    overflow: hidden;
-    height: 100%;
-    transition: transform 0.2s ease;
-}
-.notice-item:hover {
-    transform: translateY(-0.3vh);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 4vw; /* 全て統一 */
+    line-height: 1.4em;
 }
 .notice-item.urgent {
     border-left-color: #ff4444;
 }
 .notice-header {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 2vw;
-    font-size: 5w; /* ← 大きく */
-    font-weight: 600;
-    color: #222;
-    margin-bottom: 0.8vh;
+    justify-content: space-between;
+    margin-bottom: 0.5vh;
 }
 .notice-title {
-    font-size: 5vw; /* ← 本文を大きく */
-    font-weight: 600;
-    color: #000;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.4em;
-    max-height: 4.2em;
+    font-weight: bold;
+    margin-bottom: 0.5vh;
+}
+.notice-content {
+    color: #333;
 }
 .pagination {
     flex: 0 0 auto;
     height: 7vh;
     background: #fff;
-    padding: 1vh 3vw;
+    padding: 0 3vw;
     border-top: 1px solid #ddd;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 3.5vw; /* ← 大きく */
+    font-size: 4vw;
     color: #666;
 }
 .pagination-nav {
     background: #007bff;
     border: none;
-    font-size: 3.5vw; /* ← 大きく */
+    font-size: 4vw;
     color: white;
     cursor: pointer;
-    padding: 1vh 3vw;
+    padding: 0.8vh 3vw;
     border-radius: 1vh;
     font-weight: 600;
-    transition: all 0.2s ease;
 }
 .pagination-nav:disabled {
     background: #e9ecef;
@@ -154,53 +191,60 @@ a.notice-link {
         <div class="header">
             <button class="back-button" onclick="history.back()">←</button>
             <div class="header-title">お知らせ一覧</div>
+            <button class="menu-button" onclick="toggleMenu()">
+                <span class="menu-icon"></span>
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="パスワード設定.html">パスワード設定</a>
+                <a href="ログアウト.html">ログアウト</a>
+            </div>
         </div>
 
-        <!-- お知らせ一覧（5件、全件クリック可能） -->
+        <!-- お知らせ一覧 -->
         <div class="main-content">
             <a href="お知らせ詳細.html" class="notice-link">
                 <div class="notice-item urgent">
                     <div class="notice-header">
-                        <span>給与課</span>
-                        <span>2025/09/11</span>
+                        <span>給与課</span><span>2025/09/11</span>
                     </div>
-                    <div class="notice-title">システムメンテナンスのお知らせがありますので、各自確認してください</div>
+                    <div class="notice-title">システムメンテナンスのお知らせ</div>
+                    <div class="notice-content">全社システムのメンテナンスを実施しますので、各自ご確認ください。</div>
                 </div>
             </a>
             <a href="お知らせ詳細.html" class="notice-link">
                 <div class="notice-item">
                     <div class="notice-header">
-                        <span>人事部</span>
-                        <span>2025/09/10</span>
+                        <span>人事部</span><span>2025/09/10</span>
                     </div>
-                    <div class="notice-title">新機能リリースのお知らせがありますので確認してください</div>
+                    <div class="notice-title">新機能リリースのお知らせ</div>
+                    <div class="notice-content">新機能がリリースされましたので、利用方法を確認してください。</div>
                 </div>
             </a>
             <a href="お知らせ詳細.html" class="notice-link">
                 <div class="notice-item">
                     <div class="notice-header">
-                        <span>IT戦略部</span>
-                        <span>2025/09/09</span>
+                        <span>IT戦略部</span><span>2025/09/09</span>
                     </div>
-                    <div class="notice-title">セキュリティアップデート情報について重要な内容がありますので確認してください</div>
+                    <div class="notice-title">セキュリティアップデート情報</div>
+                    <div class="notice-content">重要なセキュリティ修正を含むアップデート情報をお知らせします。</div>
                 </div>
             </a>
             <a href="お知らせ詳細.html" class="notice-link">
                 <div class="notice-item urgent">
                     <div class="notice-header">
-                        <span>総務部</span>
-                        <span>2025/09/08</span>
+                        <span>総務部</span><span>2025/09/08</span>
                     </div>
-                    <div class="notice-title">利用規約改定のお知らせがありますので、各自確認してください</div>
+                    <div class="notice-title">利用規約改定のお知らせ</div>
+                    <div class="notice-content">新しい利用規約に改定されましたので、必ず確認してください。</div>
                 </div>
             </a>
             <a href="お知らせ詳細.html" class="notice-link">
                 <div class="notice-item">
                     <div class="notice-header">
-                        <span>営業第1G</span>
-                        <span>2025/09/07</span>
+                        <span>営業第1G</span><span>2025/09/07</span>
                     </div>
                     <div class="notice-title">キャンペーン開始のお知らせ</div>
+                    <div class="notice-content">営業キャンペーンを開始しました。詳細を確認してください。</div>
                 </div>
             </a>
         </div>
@@ -213,5 +257,12 @@ a.notice-link {
         </div>
     </div>
 </div>
+
+<script>
+function toggleMenu() {
+    const menu = document.getElementById("dropdownMenu");
+    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+}
+</script>
 </body>
 </html>
