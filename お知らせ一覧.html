@@ -177,7 +177,7 @@ a.notice-link{display:block;height:100%;text-decoration:none;color:inherit;}
   <div class="phone-screen">
     <div class="header">
       <button class="back-button" onclick="history.back()">←</button>
-      <div class="header-title">お知らせ一覧2</div>
+      <div class="header-title">お知らせ一覧3</div>
       <button class="menu-button" aria-expanded="false" aria-controls="menu" onclick="toggleMenu()">☰</button>
       <div class="menu" id="menu">
         <a href="#">パスワード設定</a>
@@ -186,19 +186,18 @@ a.notice-link{display:block;height:100%;text-decoration:none;color:inherit;}
     </div>
 
     <div class="main-content" id="mainContent">
-      <!-- 6件のお知らせ -->
-      <a class="notice-link" href="お知らせ詳細.html">
-        <div class="notice-item unread">
+      <a class="notice-link" href="お知らせ詳細.html" data-index="0">
+        <div class="notice-item" id="notice0">
           <div class="notice-header"><span>給与課</span><span>2025/09/11</span></div>
           <div class="notice-title">メンテナンス</div>
           <div class="notice-body">システムメンテナンスのお知らせです。必ず確認してください。</div>
         </div>
       </a>
-      <a class="notice-link" href="お知らせ詳細.html"><div class="notice-item"><div class="notice-header"><span>人事部</span><span>2025/09/10</span></div><div class="notice-title">新機能</div><div class="notice-body">新しい機能をリリースしました。操作方法を確認してください。</div></div></a>
-      <a class="notice-link" href="お知らせ詳細.html"><div class="notice-item"><div class="notice-header"><span>IT戦略部</span><span>2025/09/09</span></div><div class="notice-title">セキュリティ</div><div class="notice-body">セキュリティ更新を実施しました。必ず再ログインしてください。</div></div></a>
-      <a class="notice-link" href="お知らせ詳細.html"><div class="notice-item"><div class="notice-header"><span>総務部</span><span>2025/09/08</span></div><div class="notice-title">利用規約</div><div class="notice-body">利用規約を改定しました。内容を確認してください。</div></div></a>
-      <a class="notice-link" href="お知らせ詳細.html"><div class="notice-item"><div class="notice-header"><span>営業第1G</span><span>2025/09/07</span></div><div class="notice-title">キャンペーン</div><div class="notice-body">秋のキャンペーンが開始されました。詳細をご確認ください。</div></div></a>
-      <a class="notice-link" href="お知らせ詳細.html"><div class="notice-item urgent"><div class="notice-header"><span>開発部</span><span>2025/09/06</span></div><div class="notice-title">重要</div><div class="notice-body">重要なお知らせです。必ず確認してください。</div></div></a>
+      <a class="notice-link" href="お知らせ詳細.html" data-index="1"><div class="notice-item"><div class="notice-header"><span>人事部</span><span>2025/09/10</span></div><div class="notice-title">新機能</div><div class="notice-body">新しい機能をリリースしました。操作方法を確認してください。</div></div></a>
+      <a class="notice-link" href="お知らせ詳細.html" data-index="2"><div class="notice-item"><div class="notice-header"><span>IT戦略部</span><span>2025/09/09</span></div><div class="notice-title">セキュリティ</div><div class="notice-body">セキュリティ更新を実施しました。必ず再ログインしてください。</div></div></a>
+      <a class="notice-link" href="お知らせ詳細.html" data-index="3"><div class="notice-item"><div class="notice-header"><span>総務部</span><span>2025/09/08</span></div><div class="notice-title">利用規約</div><div class="notice-body">利用規約を改定しました。内容を確認してください。</div></div></a>
+      <a class="notice-link" href="お知らせ詳細.html" data-index="4"><div class="notice-item"><div class="notice-header"><span>営業第1G</span><span>2025/09/07</span></div><div class="notice-title">キャンペーン</div><div class="notice-body">秋のキャンペーンが開始されました。詳細をご確認ください。</div></div></a>
+      <a class="notice-link" href="お知らせ詳細.html" data-index="5"><div class="notice-item urgent"><div class="notice-header"><span>開発部</span><span>2025/09/06</span></div><div class="notice-title">重要</div><div class="notice-body">重要なお知らせです。必ず確認してください。</div></div></a>
     </div>
 
     <div class="pagination">
@@ -218,10 +217,10 @@ function toggleMenu(){
   btn.setAttribute('aria-expanded', String(!open));
 }
 
+// ページネーション
 const mainContent = document.getElementById('mainContent');
 const notices = Array.from(mainContent.children);
 let page = 1;
-
 function showPage(n){
   if(n===1){
     notices.forEach((el,i)=>el.style.display = (i<5)?'block':'none');
@@ -233,11 +232,39 @@ function showPage(n){
   document.getElementById('pageInfo').textContent = n+' / 2';
   page = n;
 }
-
 document.getElementById('prevBtn').addEventListener('click',()=>showPage(page-1));
 document.getElementById('nextBtn').addEventListener('click',()=>showPage(page+1));
-
 showPage(1);
+
+// 未読管理
+const unreadKey = 'noticeUnread';
+function initUnread(){
+  const unreadData = localStorage.getItem(unreadKey);
+  if(!unreadData){
+    localStorage.setItem(unreadKey, JSON.stringify([0])); // 初期状態は1件目のみ未読
+  }
+  updateUnread();
+}
+function updateUnread(){
+  const unreadData = JSON.parse(localStorage.getItem(unreadKey) || '[]');
+  notices.forEach((a,i)=>{
+    const item = a.querySelector('.notice-item');
+    if(unreadData.includes(i)) item.classList.add('unread');
+    else item.classList.remove('unread');
+  });
+}
+notices.forEach((a,i)=>{
+  a.addEventListener('click',()=>{
+    const unreadData = JSON.parse(localStorage.getItem(unreadKey)||'[]');
+    const idx = unreadData.indexOf(i);
+    if(idx!==-1){
+      unreadData.splice(idx,1); // 未読解除
+      localStorage.setItem(unreadKey, JSON.stringify(unreadData));
+      updateUnread();
+    }
+  });
+});
+initUnread();
 </script>
 </body>
 </html>
