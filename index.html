@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+    <html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>社員ポータル - スマホ版</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                background: #f8f5f5;
+                height: 100vh;
+                overflow: hidden; /* ←スクロールを防止 */
+            }
+
+            .phone-container {
+                width: 100%;
+                height: 100vh; /* 1画面に収める */
+                display: flex;
+                flex-direction: column;
+                background: white;
+            }
+
+            .header {
+                flex: 0 0 auto;
+                padding: 1vh;
+                text-align: center;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .header img {
+                max-width: 60%;
+                height: auto;
+            }
+
+            .main-content {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+                padding: 1vh;
+                overflow: hidden;
+            }
+
+            .attendance-section {
+                flex: 0 0 auto;
+                border: 1px solid #e5e7eb;
+                border-radius: 1vh;
+                padding: 1vh;
+                margin-bottom: 1vh;
+                font-size: 2.5vw;
+            }
+
+            .next-workday {
+                text-align: center;
+                margin-bottom: 1vh;
+                padding: 1vh;
+                background: #f8f9fa;
+                border-radius: 1vh;
+            }
+
+            .next-workday-label {
+                font-size: 3.5vw;
+                font-weight: bold;
+                color: #666;
+            }
+
+            .next-workday-date {
+                font-size: 3.5vw;
+                font-weight: bold;
+                color: #333;
+            }
+
+            .attendance-buttons {
+                display: flex;
+                gap: 1vw;
+                margin-bottom: 1vh;
+            }
+
+            .attendance-btn {
+                flex: 1;
+                padding: 1.5vh;
+                border: none;
+                border-radius: 1vh;
+                font-size: 3.5vw;
+                font-weight: 600;
+                cursor: pointer;
+            }
+
+            .clock-in { background: #dff5f3; }
+            .clock-out { background: #def3be; }
+
+            .modify-btn {
+                width: 100%;
+                padding: 1.5vh;
+                background: #e4e1fa;
+                border: none;
+                border-radius: 1vh;
+                font-size: 3.5vw;
+                cursor: pointer;
+            }
+
+            .menu-grid {
+                flex: 1 1 auto;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5vh;
+                overflow: hidden;
+            }
+
+            .menu-item {
+                background: white;
+                border-radius: 1vh;
+                padding: 0.5vh;
+                text-align: center;
+                font-size: 2.5vw;
+                text-decoration: none;
+                color: #333;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .menu-icon {
+                width: 20vw;
+                height: 20vw;
+                margin-bottom: 0.5vh;
+                border-radius: 1vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #dedde2;
+            }
+
+            .menu-icon img {
+                max-width: 70%;
+                height: auto;
+            }
+
+            .menu-label {
+                font-size: 2.5vw;
+                line-height: 1.2;
+            }
+
+            .bottom-nav {
+                flex: 0 0 auto;
+                font-size: 2.5vw;
+                padding: 1vh;
+                text-align: center;
+                border-top: 1px solid #e5e7eb;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="phone-container">
+            <!-- ヘッダー -->
+            <div class="header">
+                <img src="images/Openup.jpg" alt="OpenUp Logo">
+            </div>
+
+            <!-- メインコンテンツ -->
+            <div class="main-content">
+                <!-- 勤怠セクション -->
+                <div class="attendance-section">
+                    <div class="next-workday">
+                        <div class="next-workday-label">次回指定労働日</div>
+                        <div class="next-workday-date">2025/09/11(木)</div>
+                    </div>
+
+                    <div class="attendance-buttons">
+                        <button class="attendance-btn clock-in">定時出勤済み</button>
+                        <button class="attendance-btn clock-out">定時退勤</button>
+                    </div>
+
+                    <button class="modify-btn">勤怠修正</button>
+                </div>
+
+                <!-- メニューグリッド -->
+                <div class="menu-grid">
+                    <a href="お知らせ一覧V2.html" class="menu-item">
+                        <div class="menu-icon"><img src="images/info.png"></div>
+                        <div class="menu-label">お知らせ</div>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon"><img src="images/money.png"></div>
+                        <div class="menu-label">給与明細</div>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon"><img src="images/contract.png"></div>
+                        <div class="menu-label">書類確認<br>締結</div>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon"><img src="images/benefit.png"></div>
+                        <div class="menu-label">福利厚生</div>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon"><img src="images/information.png"></div>
+                        <div class="menu-label">TUNAG</div>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon"><img src="images/FAQ2.png"></div>
+                        <div class="menu-label">ゆめのこ<br>FAQ!</div>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon"><img src="images/Careersheet.png"></div>
+                        <div class="menu-label">経歴更新</div>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon"><img src="images/train.png"></div>
+                        <div class="menu-label">交通費<br>立替</div>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <div class="menu-icon"><img src="images/application.png"></div>
+                        <div class="menu-label">各種申請</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ボトムナビ -->
+            <div class="bottom-nav">
+                Copyright © Open Up Group Inc. All rights reserved.
+            </div>
+        </div>
+    </body>
+    </html>
