@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お知らせ詳細</title>
+<style>
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.header {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+    background: #f8f8f8;
+    border-radius: 12px 12px 0 0;
+}
+.back-button {
+    position: absolute;
+    left: 10px;
+    font-size: 16px;
+    color: #007bff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.header-title {
+    font-size: 7vw;
+    font-weight: bold;
+    color: #333;
+}
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background: #f8f8f8;
+    overflow-y: auto;
+}
+.notice-detail {
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.notice-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 8px;
+}
+.notice-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+.notice-body {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+.button-group {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+}
+.button-group button {
+    flex: 1;
+    padding: 8px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+}
+#markRead {
+    background: #007bff;
+}
+#markUnread {
+    background: #6c757d;
+}
+.pagination {
+    height: 50px;
+    background: #fff;
+    padding: 10px 15px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+    border-radius: 0 0 12px 12px;
+}
+.pagination a {
+    background: #007bff;
+    font-size: 14px;
+    color: white;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.pagination a:hover {
+    background: #0056b3;
+}
+.pagination-info {
+    font-weight: 600;
+    color: #333;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <!-- ヘッダー -->
+    <div class="header">
+        <button class="back-button" onclick="history.back()">←</button>
+        <div class="header-title">お知らせ詳細</div>
+    </div>
+
+    <!-- 詳細内容 -->
+    <div class="main-content">
+        <div class="notice-detail" id="notice">
+            <div class="notice-header">
+                <span>給与課</span>
+                <span>2025/09/11 14:30</span>
+            </div>
+            <div class="notice-title">システムメンテナンスのお知らせ</div>
+            <div class="notice-body">
+弊社システムにおいて、下記の日時にメンテナンスを実施いたします。
+
+【メンテナンス日時】  
+2025年9月15日 22:00 ～ 2025年9月16日 06:00
+
+上記時間帯はサービスが一時的に利用できない可能性があります。  
+利用者の皆さまにはご迷惑をおかけいたしますが、ご理解ご協力のほどお願い申し上げます。
+            </div>
+        </div>
+
+        <!-- 既読・未読ボタン -->
+        <div class="button-group">
+            <button id="markRead">既読にする</button>
+            <button id="markUnread">未読にする</button>
+        </div>
+    </div>
+
+    <!-- ページネーション -->
+    <div class="pagination">
+        <a href="news-detail-2.html">&laquo; 前のお知らせ</a>
+        <span class="pagination-info">3 / 60</span>
+        <a href="news-detail-4.html">次のお知らせ &raquo;</a>
+    </div>
+</div>
+
+<script>
+const notice = document.getElementById('notice');
+const markRead = document.getElementById('markRead');
+const markUnread = document.getElementById('markUnread');
+
+markRead.addEventListener('click', () => {
+    notice.style.backgroundColor = '#e0ffe0'; // 緑っぽく既読表示
+});
+
+markUnread.addEventListener('click', () => {
+    notice.style.backgroundColor = '#fff'; // 元に戻す
+});
+</script>
+</body>
+</html>

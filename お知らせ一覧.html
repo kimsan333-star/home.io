@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お知らせ画面</title>
+<style>
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+}
+.phone-frame {
+    width: 100vw;
+    height: 100vh;
+    max-width: 480px;
+    border-radius: 2vh;
+    padding: 0.8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 2vh;
+    display: flex;
+    flex-direction: column;
+}
+.header {
+    flex: 0 0 auto;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+    background: #f8f8f8;
+}
+.back-button {
+    position: absolute;
+    left: 10px;
+    font-size: 16px;
+    color: #007bff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.header-title {
+    font-size: 7vw; /* ← 少し大きく */
+    font-weight: bold;
+    color: #333;
+}
+.main-content {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    gap: 2vh;
+    padding: 1vh;
+    background: #f8f8f8;
+}
+.notice-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+    border-radius: 1vh;
+    padding: 1vh;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-left: 0.6vh solid #ccc;
+    overflow: hidden;
+    height: 100%;
+    transition: transform 0.2s ease;
+}
+.notice-item:hover {
+    transform: translateY(-0.3vh);
+}
+.notice-item.urgent {
+    border-left-color: #ff4444;
+}
+.notice-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2vw;
+    font-size: 5w; /* ← 大きく */
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.8vh;
+}
+.notice-title {
+    font-size: 5vw; /* ← 本文を大きく */
+    font-weight: 600;
+    color: #000;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4em;
+    max-height: 4.2em;
+}
+.pagination {
+    flex: 0 0 auto;
+    height: 7vh;
+    background: #fff;
+    padding: 1vh 3vw;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 3.5vw; /* ← 大きく */
+    color: #666;
+}
+.pagination-nav {
+    background: #007bff;
+    border: none;
+    font-size: 3.5vw; /* ← 大きく */
+    color: white;
+    cursor: pointer;
+    padding: 1vh 3vw;
+    border-radius: 1vh;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.pagination-nav:disabled {
+    background: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+.pagination-info {
+    font-weight: 700;
+    color: #333;
+}
+a.notice-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+</style>
+</head>
+<body>
+<div class="phone-frame">
+    <div class="phone-screen">
+        <!-- ヘッダー -->
+        <div class="header">
+            <button class="back-button" onclick="history.back()">←</button>
+            <div class="header-title">お知らせ一覧</div>
+        </div>
+
+        <!-- お知らせ一覧（5件、全件クリック可能） -->
+        <div class="main-content">
+            <a href="お知らせ詳細.html" class="notice-link">
+                <div class="notice-item urgent">
+                    <div class="notice-header">
+                        <span>給与課</span>
+                        <span>2025/09/11</span>
+                    </div>
+                    <div class="notice-title">システムメンテナンスのお知らせがありますので、各自確認してください</div>
+                </div>
+            </a>
+            <a href="お知らせ詳細.html" class="notice-link">
+                <div class="notice-item">
+                    <div class="notice-header">
+                        <span>人事部</span>
+                        <span>2025/09/10</span>
+                    </div>
+                    <div class="notice-title">新機能リリースのお知らせがありますので確認してください</div>
+                </div>
+            </a>
+            <a href="お知らせ詳細.html" class="notice-link">
+                <div class="notice-item">
+                    <div class="notice-header">
+                        <span>IT戦略部</span>
+                        <span>2025/09/09</span>
+                    </div>
+                    <div class="notice-title">セキュリティアップデート情報について重要な内容がありますので確認してください</div>
+                </div>
+            </a>
+            <a href="お知らせ詳細.html" class="notice-link">
+                <div class="notice-item urgent">
+                    <div class="notice-header">
+                        <span>総務部</span>
+                        <span>2025/09/08</span>
+                    </div>
+                    <div class="notice-title">利用規約改定のお知らせがありますので、各自確認してください</div>
+                </div>
+            </a>
+            <a href="お知らせ詳細.html" class="notice-link">
+                <div class="notice-item">
+                    <div class="notice-header">
+                        <span>営業第1G</span>
+                        <span>2025/09/07</span>
+                    </div>
+                    <div class="notice-title">キャンペーン開始のお知らせ</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- ページネーション -->
+        <div class="pagination">
+            <button class="pagination-nav" disabled>前へ</button>
+            <span class="pagination-info">1 / 10</span>
+            <button class="pagination-nav">次へ</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
