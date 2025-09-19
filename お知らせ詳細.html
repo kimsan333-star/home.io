@@ -96,11 +96,14 @@
         background-color: #f0f0f0;
     }
 
+    /* .content 内でスクロールさせる */
     .content {
         flex: 1;
-        overflow-y: auto;
+        overflow-y: auto; /* 本文だけスクロール */
         padding: 16px;
         background: #fff;
+        display: flex;
+        flex-direction: column;
     }
 
     .content h2 {
@@ -125,8 +128,8 @@
         display: flex;
         gap: 10px;
         margin-top: 12px;
+        flex-shrink: 0; /* 縮まないように */
     }
-
     .button-group button {
         flex: 1;
         padding: 10px;
