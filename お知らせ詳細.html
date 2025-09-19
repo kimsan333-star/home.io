@@ -146,11 +146,16 @@
         padding: 10px;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         flex-shrink: 0;
         position: sticky;
         bottom: 0;
     }
-
+    
+    .pagination .page-info {
+    font-size: 14px;
+    color: #333;
+    }
     .pagination button {
         padding: 8px 16px;
         border: none;
@@ -213,6 +218,7 @@
 
     <div class="pagination">
         <button disabled>前へ</button>
+        <span class="page-info">1 / 6</span>
         <button>次へ</button>
     </div>
 
