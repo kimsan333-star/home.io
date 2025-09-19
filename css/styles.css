@@ -1,0 +1,120 @@
+/* Reset */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img{max-width:100%;display:block}
+button{background:none;border:none;font:inherit}
+p{margin:0} /* pの既定余白を消す */
+
+:root{
+	--brand:#ed6c00;
+	--brand-weak: rgba(237,108,0,.08);
+	--text:#222; --muted:#6b7280; --border:#e5e7eb; --tile:#fff;
+	--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+	--radius-lg:18px;
+	--maxw:1280px;
+	--tile-size:110px;  /* タイル固定サイズ（幅=高さ） */
+	--gap:12px;
+}
+
+body{
+	background:#f3f4f6; color:var(--text);
+	font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,
+		"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;
+	line-height:1.5;
+}
+
+/* App shell（3行目1frは“メインラッパー”専用） */
+.app{
+	max-width:var(--maxw); margin:0 auto; min-height:100dvh; background:#fff;
+	display:grid; grid-template-rows:auto auto 1fr; /* header / datestrip / main */
+	box-shadow:var(--shadow);
+}
+
+/* Topbar */
+.topbar{
+	display:grid; grid-template-columns:1fr auto; align-items:center; gap:12px;
+	padding:10px 12px; border-bottom:1px solid var(--border); background:#fff;
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand__logo{width:120px;height:40px;object-fit:contain;background:#fff;border-radius:6px}
+.brand__url{display:none;color:var(--muted);font-size:12px}
+@media (min-width:640px){ .brand__url{display:block} }
+.menu-btn{width:36px;height:36px;border-radius:9px;border:1px solid var(--border);
+	background:#fff;box-shadow:var(--shadow);display:grid;place-items:center;cursor:pointer}
+.menu-btn img{width:20px;height:20px}
+
+/* Date strip */
+.datestrip{
+	background:#fff;color:#1f2937; display:flex;align-items:center;justify-content:space-between;
+	padding:10px 14px; border-top:3px solid var(--brand); 
+	/*border-bottom:1px solid var(--border);*/
+}
+.datestrip__date{display:flex;align-items:center;gap:8px;font-weight:700;font-size:20px}
+/*.datestrip__time{font-weight:700;font-variant-numeric:tabular-nums}*/
+
+/* メイン内容のラッパー */
+.main{ display:block; }
+
+/* セクション共通パディング */
+.section{ padding:14px; }
+.section--att{ padding-bottom:8px; } /* 次のテキストと詰める */
+
+/* ▼ タイル並び：横幅に合わせて“均等”配置（各行でspace-evenly） */
+.tiles{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:space-evenly;  /* 横方向を均等配置 */
+	align-content:flex-start;
+	row-gap:var(--gap);            /* 行間だけ固定 */
+	column-gap:0;                  /* 横はspace-evenlyに任せる */
+}
+
+/* タイル本体（固定正方形） */
+.tile{
+	position:relative; width:var(--tile-size); height:var(--tile-size);
+	background:var(--tile); border:1px solid var(--border); border-radius:var(--radius-lg);
+	box-shadow:var(--shadow); padding:12px 10px;
+	display:flex; flex-direction:column; align-items:center; justify-content:center;
+	gap:10px; text-align:center; transition:transform .08s ease,background .2s ease;
+	overflow:hidden; cursor:default;
+}
+.tile:hover{ background:#fafafa; transform:translateY(-1px); }
+.tile img{ width:60px; height:60px; object-fit:contain; }
+.tile__label{
+	font-size:12.5px;color:#111827;line-height:1.25;letter-spacing:.02em;
+	display:grid;
+	/*display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; */
+}
+.badge{
+	position:absolute; top:6px; right:8px; min-width:25px; height:25px; padding:0 5px;
+	border-radius:999px; background:#ff0000; color:#fff; font-weight:700; font-size:14px;
+	display:grid; place-items:center; box-shadow:var(--shadow);
+}
+.badge[hidden]{display:none}
+
+/* 次回指定労働日（テキスト行：中央寄せ） */
+.nextday{
+	padding:30px 14px 10px;
+	color:#111827;
+	font-size:18px;
+	text-align:center;
+}
+.nextday strong{ font-weight:700; }
+
+/* Footer note */
+.footer-note{ padding:16px 14px 24px; font-size:12px; color:#6b7280; text-align:center; }
+
+/* Overlay menu */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.38);display:none;z-index:50}
+.overlay[aria-hidden="false"]{display:block}
+.sheet{
+	position:absolute;top:12px;right:12px;width:220px;background:#fff;border:1px solid var(--border);
+	border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.18);overflow:hidden;animation:pop .12s ease;
+}
+@keyframes pop{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+.sheet header{padding:10px 14px;font-weight:700;border-bottom:1px solid var(--border);background:var(--brand-weak)}
+.sheet ul{list-style:none;margin:0;padding:6px}
+.sheet li{margin:2px 0}
+.sheet button.menuitem{width:100%;text-align:left;padding:10px 12px;border-radius:10px;cursor:pointer}
+.sheet button.menuitem:hover{background:#f9fafb}
+.sheet button.menuitem img{width:18px;height:18px;margin-right:8px;vertical-align:-4px}
