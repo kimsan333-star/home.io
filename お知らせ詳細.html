@@ -6,11 +6,11 @@
 <title>お知らせ詳細</title>
 <style>
     :root{
-  --header-h: 8dvh;
-  --pagination-h: 7dvh;
-  --fs: clamp(16px, 4vw, 18px);
-}
-*{box-sizing:border-box;}
+        --header-h: 8dvh;
+        --pagination-h: 7dvh;
+        --fs: clamp(16px, 4vw, 18px);
+    }
+    *{box-sizing:border-box;}
     body {
         margin: 0;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -18,9 +18,10 @@
         display: flex;
         flex-direction: column;
         height: 100vh;
-        overflow: hidden; /* 全体スクロール禁止 */
+        overflow: hidden;
     }
 
+    /* ヘッダー */
     .header{
         height:60px;
         display:flex;
@@ -32,7 +33,6 @@
         padding:0 3vw;
         box-sizing: border-box;
     }
-
     .back-button{
         position:absolute;
         left:10px;
@@ -42,7 +42,6 @@
         font-size:1.3rem;
         cursor:pointer;
     }
-
     .menu-button{
         position:absolute;
         right:10px;
@@ -52,13 +51,13 @@
         line-height:1;
         cursor:pointer;
     }
-
     .header-title{
-    font-weight:700;
-    font-size:calc(var(--fs) * 1.1);
-    color:#333;
+        font-weight:700;
+        font-size:calc(var(--fs) * 1.1);
+        color:#333;
     }
 
+    /* メニュー */
     .menu-dropdown {
         position: absolute;
         top: 60px;
@@ -72,7 +71,6 @@
         min-width: 150px;
         z-index: 1000;
     }
-
     .menu-dropdown h3 {
         margin: 0;
         padding: 10px;
@@ -81,7 +79,6 @@
         font-weight: bold;
         background: #f8f8f8;
     }
-
     .menu-dropdown button {
         padding: 10px;
         border: none;
@@ -91,44 +88,41 @@
         cursor: pointer;
         font-size: 14px;
     }
-
     .menu-dropdown button:hover {
         background-color: #f0f0f0;
     }
 
-    /* .content 内でスクロールさせる */
+    /* コンテンツ */
     .content {
         flex: 1;
-        overflow-y: auto; /* 本文だけスクロール */
+        overflow-y: auto;
         padding: 16px;
         background: #fff;
         display: flex;
         flex-direction: column;
     }
-
     .content h2 {
         margin-top: 0;
         font-size: 18px;
         color: #333;
     }
-
     .content .date {
         font-size: 14px;
         color: #666;
         margin-bottom: 12px;
     }
-
     .content p {
         font-size: 15px;
         line-height: 1.6;
         margin-bottom: 16px;
     }
 
+    /* 既読・未読ボタン */
     .button-group {
         display: flex;
         gap: 10px;
         margin-top: 12px;
-        flex-shrink: 0; /* 縮まないように */
+        flex-shrink: 0;
     }
     .button-group button {
         flex: 1;
@@ -139,10 +133,10 @@
         cursor: pointer;
         color: #fff;
     }
-
     #markRead { background: #007bff; }
     #markUnread { background: #6c757d; }
 
+    /* ページネーション */
     .pagination {
         background: #fff;
         border-top: 1px solid #ddd;
@@ -154,10 +148,9 @@
         position: sticky;
         bottom: 0;
     }
-    
     .pagination .page-info {
-    font-size: 14px;
-    color: #333;
+        font-size: 14px;
+        color: #333;
     }
     .pagination button {
         padding: 8px 16px;
@@ -168,7 +161,6 @@
         font-size: 14px;
         cursor: pointer;
     }
-
     .pagination button:disabled {
         background: #ccc;
         cursor: not-allowed;
@@ -213,6 +205,7 @@
             本文を長めにしてスクロールを確認できるようにしています。
         </p>
 
+        <!-- 既読・未読ボタン：スクロール最後に表示 -->
         <div class="button-group">
             <button id="markRead">既読にする</button>
             <button id="markUnread">未読にする</button>
