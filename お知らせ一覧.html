@@ -93,30 +93,37 @@ body{
 }
 .menu a:hover{background:#f6f6f6;}
 
-.main-content{
+.main-content {
   height: calc(100dvh - var(--header-h) - var(--pagination-h));
-  background:#f8f8f8;
-  padding:1vh 3vw;
-  display:grid;
+  background: #f8f8f8;
+  padding: 0 3vw; /* 左右のpaddingを設定 */
+  padding-top: calc(0.8vh + 3px); /* ヘッダーとの間隔を設定（border-bottomを考慮） */
+  display: grid;
   grid-template-rows: repeat(5, 1fr);
-  gap:0.8vh;
-  overflow:hidden;
+  gap: 0; /* お知らせ同士の間隔を一旦0に */
+  overflow: hidden;
 }
 
-.notice-item{
-  background:#fff;
-  border-radius:10px;
-  padding:0.8vh 2vw;
-  box-shadow:0 1px 3px rgba(0,0,0,0.08);
-  border-left:0.6vh solid #ccc; /* 通常はグレー */
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  font-size:var(--fs);
-  line-height:1.4;
-  overflow:hidden;
-  position:relative;
+.notice-item {
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.8vh 2vw;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-left: 0.6vh solid #ccc; /* 通常はグレー */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-size: var(--fs);
+  line-height: 1.4;
+  overflow: hidden;
+  position: relative;
+  margin-top: 0.8vh; /* お知らせ同士の間隔を設定 */
 }
+
+.notice-item:first-child {
+  margin-top: 0; /* 最初のお知らせの上の間隔をなくす */
+}
+
 .notice-item.urgent{border-left-color:#ff4444;}
 .notice-item.unread{border-left-color:red;} /* 未読は左端を赤に */
 .notice-header{
