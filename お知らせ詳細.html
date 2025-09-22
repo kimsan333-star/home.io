@@ -1,182 +1,23 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>お知らせ詳細</title>
-<style>
-    :root{
-        --header-h: 8dvh;
-        --pagination-h: 7dvh;
-        --fs: clamp(16px, 4vw, 18px);
-    }
-    *{box-sizing:border-box;}
-    body {
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        background-color: #f8f9fa;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        overflow: hidden;
-    }
-
-    /* ヘッダー */
-    .header{
-        height:60px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        position:relative;
-        border-bottom:3px solid #ed6c00;
-        background:#f8f8f8;
-        padding:0 3vw;
-        box-sizing: border-box;
-    }
-    .back-button{
-        position:absolute;
-        left:10px;
-        background:none;
-        border:none;
-        color:#007bff;
-        font-size:1.3rem;
-        cursor:pointer;
-    }
-    .menu-button{
-        position:absolute;
-        right:10px;
-        background:none;
-        border:none;
-        font-size:1.6rem;
-        line-height:1;
-        cursor:pointer;
-    }
-    .header-title{
-        font-weight:700;
-        font-size:calc(var(--fs) * 1.1);
-        color:#333;
-    }
-
-    /* メニュー */
-    .menu-dropdown {
-        position: absolute;
-        top: 60px;
-        right: 10px;
-        background: #fff;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        display: none;
-        flex-direction: column;
-        min-width: 150px;
-        z-index: 1000;
-    }
-    .menu-dropdown h3 {
-        margin: 0;
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-        font-size: 16px;
-        font-weight: bold;
-        background: #f8f8f8;
-    }
-    .menu-dropdown button {
-        padding: 10px;
-        border: none;
-        background: none;
-        text-align: left;
-        width: 100%;
-        cursor: pointer;
-        font-size: 14px;
-    }
-    .menu-dropdown button:hover {
-        background-color: #f0f0f0;
-    }
-
-    /* コンテンツ */
-    .content {
-        flex: 1;
-        overflow-y: auto;
-        padding: 16px;
-        background: #fff;
-        display: flex;
-        flex-direction: column;
-    }
-    .content h2 {
-        margin-top: 0;
-        font-size: 18px;
-        color: #333;
-    }
-    .content .date {
-        font-size: 14px;
-        color: #666;
-        margin-bottom: 12px;
-    }
-    .content p {
-        font-size: 15px;
-        line-height: 1.6;
-        margin-bottom: 16px;
-    }
-
-    /* 既読・未読ボタン */
-    .button-group {
-        display: flex;
-        gap: 10px;
-        margin-top: 12px;
-        flex-shrink: 0;
-    }
-    .button-group button {
-        flex: 1;
-        padding: 10px;
-        border: none;
-        border-radius: 6px;
-        font-size: 14px;
-        cursor: pointer;
-        color: #fff;
-    }
-    #markRead { background: #007bff; }
-    #markUnread { background: #6c757d; }
-
-    /* ページネーション */
-    .pagination {
-        background: #fff;
-        border-top: 1px solid #ddd;
-        padding: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-shrink: 0;
-        position: sticky;
-        bottom: 0;
-    }
-    .pagination .page-info {
-        font-size: 14px;
-        color: #333;
-    }
-    .pagination button {
-        padding: 8px 16px;
-        border: none;
-        background: #007bff;
-        color: #fff;
-        border-radius: 6px;
-        font-size: 14px;
-        cursor: pointer;
-    }
-    .pagination button:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お知らせ詳細</title>
+    <link rel="stylesheet" href="styles-2.css">
 </head>
 <body>
     <header class="header">
         <button class="back-button" onclick="history.back()">←</button>
         <div class="header-title">お知らせ詳細</div>
-        <button class="menu-button" id="menuButton">☰</button>
-        <div class="menu-dropdown" id="menuDropdown">
-            <h3>メニュー</h3>
-            <button onclick="alert('パスワード更新が選択されました')">パスワード更新</button>
-            <button onclick="alert('ログアウトが選択されました')">ログアウト</button>
-        </div>
+        <button class="menu-btn" id="btnMenu" aria-haspopup="dialog" aria-expanded="false" aria-controls="menuSheet">
+            <img src="data:image/svg+xml;utf8,
+            <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'>
+                <rect y='3' width='20' height='2' fill='%23777'/>
+                <rect y='9' width='20' height='2' fill='%23777'/>
+                <rect y='15' width='20' height='2' fill='%23777'/>
+            </svg>" alt="">
+        </button>
     </header>
 
     <div class="content">
@@ -191,12 +32,13 @@
             【メンテナンス日時】<br>
             2025年9月25日（木） 00:00 ～ 06:00<br>
             ※作業状況により終了時間が前後する場合がございます。
+        </p>
+        <p>
             【影響範囲】<br>
             メンテナンス中はポータルサイトにアクセスできません。<br>
             ご利用の皆さまにはご不便をおかけいたしますが、ご理解とご協力のほどよろしくお願いいたします。
         </p>
 
-        <!-- 既読・未読ボタン：スクロール最後に表示 -->
         <div class="button-group">
             <button id="markRead">既読にする</button>
             <button id="markUnread">未読にする</button>
@@ -209,34 +51,34 @@
         <button>次へ</button>
     </div>
 
-<script>
-const noticeTitle = document.querySelector('.content h2');
-const markRead = document.getElementById('markRead');
-const markUnread = document.getElementById('markUnread');
+    <div class="overlay" id="overlay" aria-hidden="true">
+        <div class="sheet" id="menuSheet" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
+            <header id="menuTitle">メニュー</header>
+            <ul>
+                <li>
+                    <button class="menuitem" type="button">
+                        <img alt="" src="data:image/svg+xml;utf8,
+                            <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18'>
+                                <circle cx='9' cy='9' r='8' stroke='%23ed6c00' fill='none'/>
+                                <path d='M9 5v6' stroke='%23ed6c00'/>
+                                <circle cx='9' cy='13' r='1' fill='%23ed6c00'/>
+                            </svg>">パスワード設定
+                    </button>
+                </li>
+                <li>
+                    <button class="menuitem" type="button">
+                        <img alt="" src="data:image/svg+xml;utf8,
+                            <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18'>
+                                <path d='M3 3h8v12H3z' fill='none' stroke='%23ed6c00'/>
+                                <path d='M11 9h5' stroke='%23ed6c00'/>
+                                <path d='M13 7l3 2-3 2' fill='%23ed6c00'/>
+                            </svg>">ログアウト
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-markRead.addEventListener('click', () => {
-    noticeTitle.style.color = '#28a745';
-});
-markUnread.addEventListener('click', () => {
-    noticeTitle.style.color = '#333';
-});
-
-// ハンバーガーメニューの制御
-const menuButton = document.getElementById('menuButton');
-const menuDropdown = document.getElementById('menuDropdown');
-
-menuButton.addEventListener('click', () => {
-    menuDropdown.style.display = (menuDropdown.style.display === 'flex') ? 'none' : 'flex';
-});
-
-// メニュー以外をタップしたら閉じる
-document.addEventListener('click', (e) => {
-    if (!menuDropdown.contains(e.target) && e.target !== menuButton) {
-        menuDropdown.style.display = 'none';
-    }
-});
-</script>
+    <script src="script-2.js"></script>
 </body>
 </html>
-
-
