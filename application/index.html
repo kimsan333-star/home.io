@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>各種申請</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="topbar">
+        <img src="./images/openup.jpg" alt="Open Up Logo" class="logo">
+        <nav>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>各種申請</h1>
+        <button class="btn" onclick="handleClick('資格申請')">資格申請</button>
+        <button class="btn" onclick="handleClick('住所変更')">住所変更</button>
+        <button class="btn" onclick="handleClick('産育休申請')">産育休申請</button>
+        <button class="btn" onclick="handleClick('振込口座変更')">振込口座変更</button>
+        <button class="btn" onclick="handleClick('修正・履歴')">修正・履歴</button>
+        <a href="javascript:void(0);" class="back-link" onclick="handleBack()">戻る</a>
+    </div>
+    <footer class="footer-note">
+        Copyright © Open Up Construction Co.,Ltd. All rights reserved.
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
