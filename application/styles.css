@@ -24,14 +24,13 @@ body {
     background: #fff;
 }
 
-.logo {
-    height: 40px; /* 画像の高さを調整 */
-    width: auto; /* 幅は自動調整 */
-}
-
-.hamburger {
-    display: flex;
-    flex-direction: column;
+.back-button {
+    position: absolute;
+    left: 10px;
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 1.3rem;
     cursor: pointer;
 }
 
@@ -88,4 +87,7 @@ h1 {
     color: #6b7280;
     text-align: center;
     background-color: #ffffff; /* フッターの背景色を追加 */
+
 }
+
+
