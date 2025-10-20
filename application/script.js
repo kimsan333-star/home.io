@@ -3,9 +3,5 @@ function handleClick(action) {
 }
 
 function handleBack() {
-    alert('戻ります。');
-}
-
-function toggleMenu() {
-    alert('ハンバーガーメニューがクリックされました。');
+    window.history.back(); // 一つ前のページに戻る
 }
