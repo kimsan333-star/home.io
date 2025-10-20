@@ -24,12 +24,14 @@ body {
     background: #fff;
 }
 
-.logo {
-    width:120px;
-    height:40px;
-    object-fit:contain;
-    background:#fff;
-    border-radius:6px
+.back-button {
+    position: absolute;
+    left: 10px;
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 1.3rem;
+    cursor: pointer;
 }
 
 .menu-btn{
@@ -95,4 +97,5 @@ h1 {
     background-color: #ffffff; /* フッターの背景色を追加 */
 
 }
+
 
