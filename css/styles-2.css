@@ -45,22 +45,6 @@ body {
     text-align: center; /* テキストを中央揃え */
 }
 
-.menu-btn {
-    position: absolute; /* 絶対位置 */
-    right: 10px; /* 右端に配置 */
-    top: 50%; /* 縦中央に配置 */
-    transform: translateY(-50%); /* 縦中央揃え */
-    width: 36px;
-    height: 36px;
-    border-radius: 9px;
-    border: 1px solid var(--border);
-    background: #fff;
-    box-shadow: var(--shadow);
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-}
-
 .content {
     flex: 1;
     overflow-y: auto;
@@ -216,4 +200,5 @@ body {
     height: 18px;
     margin-right: 8px;
     vertical-align: -4px;
+
 }
