@@ -45,13 +45,6 @@ body {
     text-align: center; /* テキストを中央揃え */
 }
 
-.menu-button {
-    background: none;
-    border: none;
-    font-size: 1.3rem;
-    cursor: pointer;
-}
-
 .content {
     flex: 1;
     overflow-y: auto; /* 縦スクロールを可能にする */
@@ -209,3 +202,4 @@ body {
     margin-right: 8px;
     vertical-align: -4px;
 }
+
