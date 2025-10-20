@@ -34,14 +34,6 @@ body {
     cursor: pointer;
 }
 
-.menu-btn{
-    width:36px;height:36px;border-radius:9px;border:1px solid var(--border);
-	background:#fff;box-shadow:var(--shadow);display:grid;place-items:center;cursor:pointer
-}
-.menu-btn img{
-    width:20px;height:20px
-}
-
 .bar {
     height: 3px;
     width: 25px;
@@ -97,5 +89,6 @@ h1 {
     background-color: #ffffff; /* フッターの背景色を追加 */
 
 }
+
 
 
