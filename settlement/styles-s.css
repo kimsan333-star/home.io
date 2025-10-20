@@ -32,10 +32,12 @@ body {
     border-radius:6px
 }
 
-.hamburger {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
+.menu-btn{
+    width:36px;height:36px;border-radius:9px;border:1px solid var(--border);
+	background:#fff;box-shadow:var(--shadow);display:grid;place-items:center;cursor:pointer
+}
+.menu-btn img{
+    width:20px;height:20px
 }
 
 .bar {
@@ -93,3 +95,4 @@ h1 {
     background-color: #ffffff; /* フッターの背景色を追加 */
 
 }
+
