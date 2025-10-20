@@ -25,8 +25,11 @@ body {
 }
 
 .logo {
-    height: 40px; /* 画像の高さを調整 */
-    width: auto; /* 幅は自動調整 */
+    width:120px;
+    height:40px;
+    object-fit:contain;
+    background:#fff;
+    border-radius:6px
 }
 
 .hamburger {
@@ -88,4 +91,5 @@ h1 {
     color: #6b7280;
     text-align: center;
     background-color: #ffffff; /* フッターの背景色を追加 */
+
 }
