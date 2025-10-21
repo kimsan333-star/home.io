@@ -492,7 +492,8 @@ function wireActions(){
 		$('#alertArea').textContent = '始業時刻が入力されていません。';
 	});
 	$('#btnCancel').addEventListener('click', ()=>{
-		location.href = './index.html';
+		location.href = '../index.html';
 	});
 }
+
 
