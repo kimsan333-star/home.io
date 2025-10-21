@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<meta name="color-scheme" content="light dark">
+	<meta name="theme-color" content="#ed6c00">
+	<!-- 厳格CSP（selfのみ）。本番はHTTPヘッダで配信推奨 -->
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+	<title>ログイン | OPEN UP</title>
+	<link rel="stylesheet" href="./css/login_styles.css">
+</head>
+<body>
+	<noscript>
+		<div class="noscript">このサービスを利用するには JavaScript を有効にしてください。</div>
+	</noscript>
+
+	<main class="shell">
+		<header class="brand">
+			<!-- ダミーロゴ（同一オリジン。後日差し替え） -->
+			<img
+				src="./img/openup.jpg"
+				alt="OPEN UP"
+				width="240"
+				height="72"
+				decoding="async"
+				class="logo"
+			/>
+		</header>
+
+		<section class="card" role="form" aria-label="ログインフォーム">
+			<form id="loginForm" novalidate>
+				<div class="field">
+					<label for="employeeCode">社員コード（5桁）</label>
+					<input
+						id="employeeCode"
+						name="employeeCode"
+						type="text"
+						inputmode="numeric"
+						autocomplete="username"
+						placeholder="社員コード"
+						pattern="\d{5}"
+						maxlength="5"
+						required
+						autocapitalize="off"
+						autocorrect="off"
+						spellcheck="false"
+					/>
+				</div>
+
+				<div class="field">
+					<label for="password">パスワード</label>
+					<input
+						id="password"
+						name="password"
+						type="password"
+						autocomplete="current-password"
+						placeholder="パスワード"
+						maxlength="60"
+						required
+					/>
+					<div class="help-row">
+						<a id="forgotLink" href="/help/forgot-password">パスワードをお忘れの方</a>
+						<a id="guideLink" href="/help/getting-started">初めての方はこちら</a>
+					</div>
+				</div>
+
+				<div class="row between">
+					<label class="check">
+						<input id="remember" type="checkbox" checked />
+						<span>次回から自動入力</span>
+					</label>
+
+					<!-- 端末対応時のみ表示（JSで制御） -->
+					<button type="button" id="passkeyBtn" class="ghost" hidden>
+						<span aria-hidden="true">🔑</span> パスキーでログイン
+					</button>
+				</div>
+
+				<button type="submit" class="primary" id="loginBtn">ログイン</button>
+
+				<!-- ログイン後にパスキー登録を案内（対応端末のみ） -->
+				<div class="post-login" id="postLogin" hidden>
+					<p class="hint">この端末で次回から素早くログインできます。</p>
+					<button type="button" class="outline" id="registerPasskeyBtn">
+						パスキーを登録する
+					</button>
+				</div>
+
+				<p id="message" class="message" role="status" aria-live="polite"></p>
+			</form>
+		</section>
+
+		<div class="footer-note">Copyright © Open Up Construction Co.,Ltd. All rights reserved.</div>
+		
+		<!--
+		<footer class="foot">
+			<img src="/assets/info-placeholder.png" alt="" width="24" height="24" class="foot-icon" />
+			<small>Copyright © Open Up Construction Co.,Ltd. All rights reserved.</small>
+		</footer>
+		-->
+	</main>
+
+	<script src="./js/app.js" defer></script>
+</body>
+</html>

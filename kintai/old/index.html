@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>勤怠登録・修正</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>勤怠登録・修正</h1>
+            <div class="menu-icon" id="menu-icon">
+                &#9776; <!-- ハンバーガーアイコン -->
+            </div>
+        </div>
+        <div class="border-line"></div> <!-- ボーダーラインを追加 -->
+        
+        <div class="menu-box" id="menu-box">
+            <h2>メニュー</h2>
+            <ul>
+                <li><a href="#">パスワード変更</a></li>
+                <li><a href="#">ログオフ</a></li>
+            </ul>
+        </div>
+        
+        <form id="attendance-form">
+            <div class="form-group">
+                <label for="date">就業日</label>
+                <input type="text" id="date" name="date" required placeholder="yyyy/mm/dd(aaa)" readonly>
+                <div class="date-buttons">
+                    <button type="button" id="date-decrement">▼</button>
+                    <button type="button" id="date-increment">▲</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="attendance-status">出欠</label>
+                <select id="attendance-status" name="attendance-status" required>
+                    <option value="" disabled selected>-- 選択してください --</option> <!-- 空白オプションを追加 -->
+                    <option value="出勤">出勤</option>
+                    <option value="有休">有休</option>
+                    <option value="半休">半休</option>
+                    <option value="振替出勤">振替出勤</option>
+                    <option value="振替休日">振替休日</option>
+                    <option value="週跨ぎ振替出勤">週跨ぎ振替出勤</option>
+                    <option value="週跨ぎ振替休日">週跨ぎ振替休日</option>
+                    <option value="現場全休">現場全休</option>
+                    <option value="特別">特別</option>
+                    <option value="待機">待機</option>
+                    <option value="指定日（検収）">指定日（研修）</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="start-time">始業時間</label>
+                <input type="time" id="start-time" name="start-time" required>
+            </div>
+
+            <div class="form-group">
+                <label for="end-time">終業時間</label>
+                <input type="time" id="end-time" name="end-time" required>
+            </div>
+
+            <div class="form-group">
+                <label for="break-time">休憩時間</label>
+                <input type="number" id="break-time" name="break-time" value="60" required> 分
+            </div>
+
+            <div class="form-group">
+                <label for="reason">遅刻早退理由</label>
+                <select id="reason" name="reason" required>
+                    <option value="" disabled selected>-- 選択してください --</option> <!-- 空白オプションを追加 -->
+                    <option value="現場都合">現場都合</option>
+                    <option value="自己都合">自己都合</option>
+                    <option value="電車遅延">電車遅延</option>
+                    <option value="契約に準ずる（変則）">契約に準ずる（変則）</option>
+                    <option value="時短（産育会後）">時短（産育会後）</option>
+                    <option value="その他（報告欄入力）">その他（報告欄入力）</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="report">報告欄</label>
+                <input type="text" id="report" name="report">
+            </div>
+
+            <div class="form-group">
+                <label for="certificate">遅延証明書</label>
+                <input type="file" id="certificate" name="certificate" accept=".jpg,.jpeg,.png">
+            </div>
+
+            <div class="button-group">
+                <button type="button" id="save-button">一時保存</button>
+                <button type="submit">登録申請</button>
+                <button type="button" id="close-button">閉じる</button>
+            </div>
+
+            <div class="time-summary">
+                <div class="time-summary-grid">
+                    <div class="time-summary-item">
+                        <label>勤務時間</label>
+                        <span id="work-time">00:00</span>
+                    </div>
+                    <div class="time-summary-item">
+                        <label>労働時間</label>
+                        <span id="labor-time">00:00</span>
+                    </div>
+                    <div class="time-summary-item">
+                        <label>残業時間</label>
+                        <span id="overtime">00:00</span>
+                    </div>
+                    <div class="time-summary-item">
+                        <label>深夜時間</label>
+                        <span id="midnight-time">00:00</span>
+                    </div>
+                    <div class="time-summary-item">
+                        <label>法定休日</label>
+                        <span id="legal-holiday">00:00</span>
+                    </div>
+                    <div class="time-summary-item">
+                        <label>遅刻早退</label>
+                        <span id="late-early-leave">00:00</span>
+                    </div>
+                    <div class="time-summary-item">
+                        <label>ステータス</label>
+                        <span id="status">承認済み</span>
+                    </div>
+                    <div class="time-summary-item">
+                        <label>承認者</label>
+                        <span id="approver">役荷達夫</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

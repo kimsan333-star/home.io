@@ -1,0 +1,222 @@
+:root{
+	--brand:#ed6c00;
+	--ink:#1a1a1a;
+	--muted:#888;
+	--bg:#fff;
+	--panel:#fff7f1;
+	--border:#d9d9d9;
+	--ghost-bg:#ffe8d6; /* 一時保存・前日/翌日の色 */
+	--ghost-fg:#742e00;
+	--shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic UI","YuGothic","Meiryo",sans-serif}
+button,input,select{font:inherit}
+
+/* ===== Masthead（太字なし） ===== */
+.masthead{background:#fff;position:sticky;top:0;z-index:10}
+.masthead__inner{display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+.masthead__title{margin:0;font-size:22px;font-weight:400;letter-spacing:.04em}
+.masthead__menu{border:0;background:transparent;padding:6px;display:grid;gap:3px;cursor:pointer}
+.masthead__menu-bar{display:block;width:22px;height:2px;background:#666;border-radius:2px}
+.brandline{height:4px;background:var(--brand)}
+
+/* ===== Layout ===== */
+.container{padding:16px}
+.form-row{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center;margin:12px 0}
+.form-row label{font-weight:400}
+.form-row label.req::after{content:" *";color:#d00;margin-left:.25em}
+
+/* ===== Inputs ===== */
+input[type="text"], input[type="date"], select{
+	width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;background:#fff;font-weight:400
+}
+input[readonly]{background:#f5f5f5;color:#333}
+/* 入力不可は休憩時間・遅延証明書と同じ色 */
+input:disabled{background:#f5f5f5;color:#333}
+
+.select-wrap{position:relative}
+.select-wrap select{appearance:none}
+.select-wrap .select-caret{
+	position:absolute;right:10px;top:50%;transform:translateY(-50%);width:0;height:0;
+	border-left:6px solid transparent;border-right:6px solid transparent;border-top:7px solid #555;pointer-events:none
+}
+select:has(option[value=""]:checked){color:var(--muted)}
+select option[value=""]{color:var(--muted)}
+
+/* ===== Date field ===== */
+.date-field{
+	display:grid;grid-template-columns:auto 1fr auto auto;gap:8px;align-items:center;
+	position:relative; /* カレンダーのアンカー */
+}
+.nav-day{width:36px;height:36px;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:var(--ghost-bg);color:var(--ghost-fg)}
+
+/* カレンダーボタン：枠なし・ブランドカラー・最大化 */
+.icon-btn.plain{
+	width:36px;height:36px;
+	display:grid;place-items:center;
+	padding:0;
+	cursor:pointer;
+	border:none !important;
+	background:transparent !important;
+	border-radius:0 !important;
+	box-shadow:none !important;
+	outline:none !important;
+	appearance:none;
+	-webkit-appearance:none;
+}
+.icon-btn.plain svg{
+	width:100%;
+	height:100%;
+	color:var(--brand); /* stroke='currentColor' をブランドカラーに */
+}
+.icon-btn.plain:focus,
+.icon-btn.plain:focus-visible,
+.icon-btn.plain:active{
+	outline:none;
+	box-shadow:none;
+}
+
+/* 完全に非表示（ネイティブdateは同期用途のみ） */
+.visually-hidden{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+
+/* ===== Custom calendar (yyyy/09, no Japanese era) ===== */
+.cal-overlay{
+	position:absolute;left:50%;transform:translateX(-50%);
+	top:calc(100% + 6px);
+	width:280px;background:#fff;border:1px solid var(--border);
+	border-radius:10px;box-shadow:var(--shadow);padding:8px;z-index:6;display:none
+}
+.cal-overlay.show{display:block}
+.cal-head{display:grid;grid-template-columns:auto 1fr auto;align-items:center;margin-bottom:6px}
+.cal-title{text-align:center;font-size:20px}
+.cal-nav{border:1px solid var(--border);background:#fff;border-radius:6px;width:32px;height:32px;cursor:pointer}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-grid .dow{font-size:12px;text-align:center;color:#777}
+.cal-day{padding:6px 0;text-align:center;border-radius:6px;cursor:pointer}
+.cal-day:hover{background:#f2f4f7}
+.cal-day.today{outline:1px solid var(--brand)}
+.cal-day.disabled{opacity:.35;cursor:default}
+.cal-day.selected{background:#ffe8d6;color:#742e00}
+
+/* ===== Time field (overlay two columns) ===== */
+.time-field{position:relative;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+
+/* 時計ボタン：枠・影・アウトライン完全除去、アイコン最大化＆ブランドカラー */
+.icon-btn.clock{
+	width:36px;height:36px;
+	display:grid;place-items:center;
+	padding:0;
+	cursor:pointer;
+	border:none !important;
+	background:transparent !important;
+	border-radius:0 !important;
+	box-shadow:none !important;
+	outline:none !important;
+	appearance:none;
+	-webkit-appearance:none;
+}
+.icon-btn.clock svg{
+	width:100%;
+	height:100%;
+	color:var(--brand);
+}
+.icon-btn.clock:focus,
+.icon-btn.clock:focus-visible,
+.icon-btn.clock:active{
+	outline:none;
+	box-shadow:none;
+}
+
+.time-overlay{
+	position:absolute;left:0;top:calc(100% + 6px);
+	width:230px;border:1px solid var(--border);border-radius:10px;background:#fff;box-shadow:var(--shadow);
+	display:none;z-index:5;
+}
+.time-overlay.show{display:block}
+.time-overlay__header{display:grid;grid-template-columns:1fr 1fr}
+.time-overlay .pill{padding:6px 8px;text-align:center;background:#cfd3d7;border-bottom:1px solid var(--border)}
+.time-overlay__lists{display:grid;grid-template-columns:1fr 1fr}
+.time-overlay .list{max-height:180px;overflow:auto;margin:0;padding:6px 0;list-style:none}
+.time-overlay .list li{padding:6px 12px;text-align:center;cursor:pointer}
+.time-overlay .list li:hover{background:#f2f4f7}
+.time-overlay .list li.active{background:#e8eef7}
+
+/* ===== Rest total ===== */
+.rest-total-field{display:flex;align-items:center;gap:6px}
+.rest-total-field .unit{color:#555}
+
+/* ===== File field ===== */
+.file-field{display:grid;grid-template-columns:1fr auto;gap:8px}
+.btn-subtle{border:1px solid var(--border);background:#fff;border-radius:8px;padding:8px 14px;font-weight:400}
+
+/* ===== Buttons ===== */
+.actions{margin:18px 0}
+.actions__inner{display:flex;gap:12px;justify-content:center}
+.btn{border:0;border-radius:10px;padding:10px 18px;cursor:pointer;box-shadow:var(--shadow);font-weight:400}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-ghost{background:var(--ghost-bg);color:var(--ghost-fg)}
+.btn-cancel{background:#e9ecef;color:#333}
+
+/* ===== Alert ===== */
+.alert{min-height:24px;color:#d00;margin:8px 0}
+
+/* ===== Summary ===== */
+.summary{margin:18px 0}
+.summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:10px 0}
+.summary-item{background:#f3f4f6;border:1px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
+.summary-item span{color:#333;font-weight:400}
+
+/* ===== Rest Modal（新UI） ===== */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;place-items:center;padding:16px}
+.modal.show{display:grid}
+.modal__sheet{
+	background:#ffffff;            /* ご指定：白 */
+	border:1px solid #d9d9d9;      /* ご指定：#d9d9d9 */
+	border-radius:14px;
+	box-shadow:var(--shadow);
+	max-width:720px;width:100%;
+	overflow:hidden;
+}
+.modal__body{padding:16px 18px}
+.modal__title{margin:0 0 8px 0;font-size:16px;font-weight:400}
+
+/* 見出し：番号/開始/終了/空(－ボタン列) を行と同じレイアウトで */
+.rest-head{
+	display:grid;
+	grid-template-columns:32px minmax(0,1fr) minmax(0,1fr) 40px;
+	gap:10px;
+	margin-top:4px;margin-bottom:4px;color:#333;
+	width:100%;
+}
+.rest-head > :first-child{visibility:hidden}
+.rest-head > :last-child{visibility:hidden}
+.rest-head > div{font-weight:400;align-self:end}
+
+/* 行の入れ物：縦方向に行を積む */
+.rest-grid{display:block;margin-top:4px;width:100%}
+
+/* 各行：番号 / 開始time-field / 終了time-field / －ボタン */
+.rest-row{
+	display:grid;
+	grid-template-columns:32px minmax(0,1fr) minmax(0,1fr) 40px;
+	gap:10px;
+	align-items:center;
+	margin-top:8px;
+	width:100%;
+}
+.rest-row .rowno{color:#333;text-align:right}
+.rest-row .time-field{width:100%}
+.rest-row .time-field input[type="text"]{text-align:center;width:100%}
+
+/* 行内のボタン */
+.icon-btn{width:36px;height:36px;border-radius:8px;border:0;box-shadow:var(--shadow);cursor:pointer}
+.icon-btn.minus{background:#f7c9a6}
+.modal__actions{display:flex;gap:12px;justify-content:center;margin-top:16px}
+.rest-actions .soft{background:#ffe8d6;color:#742e00} /* 休憩追加ボタンの淡色 */
+
+@media (max-width:640px){
+	.form-row{grid-template-columns:96px 1fr}
+	.summary-row{grid-template-columns:1fr 1fr}
+}

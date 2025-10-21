@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>勤怠入力・変更</title>
+	<link rel="stylesheet" href="./attendance.css">
+</head>
+<body>
+	<!-- ===== Header（既存画面と同構造／太字なし） ===== -->
+	<header class="masthead">
+		<div class="masthead__inner">
+			<h1 class="masthead__title">勤怠入力・変更</h1>
+			<button class="masthead__menu" aria-label="メニュー" type="button">
+				<span class="masthead__menu-bar"></span>
+				<span class="masthead__menu-bar"></span>
+				<span class="masthead__menu-bar"></span>
+			</button>
+		</div>
+		<div class="brandline" aria-hidden="true"></div>
+	</header>
+
+	<main class="container">
+		<form id="attendanceForm" novalidate>
+			<!-- 就業日 -->
+			<div class="form-row">
+				<label class="req">就業日</label>
+				<div class="date-field">
+					<button class="nav-day" data-dir="-1" type="button" aria-label="前日へ">&lt;</button>
+
+					<input id="workDateText" type="text" inputmode="text" placeholder="yyyy/mm/dd (曜)">
+
+					<button class="nav-day" data-dir="1" type="button" aria-label="翌日へ">&gt;</button>
+
+					<!-- カレンダーボタン（枠なし・ブランドカラー） -->
+					<button id="btnCalendar" class="icon-btn plain" type="button" aria-label="カレンダーを開く">
+						<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+							<rect x="3" y="4" width="18" height="17" rx="2" ry="2" fill="none" stroke="currentColor"/>
+							<line x1="3" y1="8" x2="21" y2="8" stroke="currentColor"/>
+							<line x1="8" y1="2" x2="8" y2="6" stroke="currentColor"/>
+							<line x1="16" y1="2" x2="16" y2="6" stroke="currentColor"/>
+							<rect x="5" y="11" width="4" height="3" fill="currentColor"/>
+							<rect x="10" y="11" width="4" height="3" fill="currentColor"/>
+							<rect x="15" y="11" width="4" height="3" fill="currentColor"/>
+							<rect x="5" y="15" width="4" height="3" fill="currentColor"/>
+							<rect x="10" y="15" width="4" height="3" fill="currentColor"/>
+							<rect x="15" y="15" width="4" height="3" fill="currentColor"/>
+						</svg>
+					</button>
+					<!-- フォールバック用のネイティブ date（表示はしない） -->
+					<input id="workDate" type="date" class="visually-hidden" aria-hidden="true" tabindex="-1">
+
+					<!-- カスタム・カレンダー（和暦なし、タイトル yyyy/09） -->
+					<div id="calendarOverlay" class="cal-overlay" aria-hidden="true" role="dialog">
+						<div class="cal-head">
+							<button type="button" class="cal-nav prev" aria-label="前の月">‹</button>
+							<div class="cal-title"></div>
+							<button type="button" class="cal-nav next" aria-label="次の月">›</button>
+						</div>
+						<div class="cal-grid">
+							<div class="dow">日</div><div class="dow">月</div><div class="dow">火</div><div class="dow">水</div>
+							<div class="dow">木</div><div class="dow">金</div><div class="dow">土</div>
+							<!-- 日付セルは JS で描画 -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 勤怠種別 -->
+			<div class="form-row">
+				<label class="req">勤怠種別</label>
+				<div class="select-wrap">
+					<select id="attendanceType" required>
+						<option value="" selected>選択してください</option>
+						<option>出勤</option>
+						<option>有休</option>
+						<option>半休</option>
+						<option>振替出勤</option>
+						<option>振替休日</option>
+						<option>週跨ぎ振替出勤</option>
+						<option>週跨ぎ振替休日</option>
+						<option>現場全休</option>
+						<option>特別</option>
+						<option>待機</option>
+						<option>指定日(研修)</option>
+					</select>
+					<span class="select-caret"></span>
+				</div>
+			</div>
+
+			<!-- 始業時刻（単一テキスト＋オーバーレイ） -->
+			<div class="form-row">
+				<label class="req">始業時刻</label>
+				<div class="time-field" data-name="startTime">
+					<input id="startTimeText" type="text" placeholder="00:00">
+					<button class="icon-btn clock" type="button" aria-label="始業時刻を選択">
+						<svg width="100%" height="100%" viewBox="0 0 24 24" aria-hidden="true">
+							<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor"/>
+							<line x1="12" y1="6" x2="12" y2="12" stroke="currentColor"/>
+							<line x1="12" y1="12" x2="16.5" y2="14.5" stroke="currentColor"/>
+						</svg>
+					</button>
+					<div class="time-overlay" role="dialog" aria-hidden="true">
+						<div class="time-overlay__header">
+							<div class="pill hh-pill">00</div>
+							<div class="pill mm-pill">00</div>
+						</div>
+						<div class="time-overlay__lists">
+							<ul class="list hh"></ul>
+							<ul class="list mm"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 終業時刻（単一テキスト＋オーバーレイ） -->
+			<div class="form-row">
+				<label class="req">終業時刻</label>
+				<div class="time-field" data-name="endTime">
+					<input id="endTimeText" type="text" placeholder="00:00">
+					<button class="icon-btn clock" type="button" aria-label="終業時刻を選択">
+						<svg width="100%" height="100%" viewBox="0 0 24 24" aria-hidden="true">
+							<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor"/>
+							<line x1="12" y1="6" x2="12" y2="12" stroke="currentColor"/>
+							<line x1="12" y1="12" x2="16.5" y2="14.5" stroke="currentColor"/>
+						</svg>
+					</button>
+					<div class="time-overlay" role="dialog" aria-hidden="true">
+						<div class="time-overlay__header">
+							<div class="pill hh-pill">00</div>
+							<div class="pill mm-pill">00</div>
+						</div>
+						<div class="time-overlay__lists">
+							<ul class="list hh"></ul>
+							<ul class="list mm"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 休憩時間（合計分） -->
+			<div class="form-row">
+				<label class="req">休憩時間</label>
+				<div class="rest-total-field">
+					<input id="restTotal" type="text" value="" placeholder="0" readonly>
+					<span class="unit">分</span>
+				</div>
+			</div>
+
+			<!-- 遅刻早退理由 -->
+			<div class="form-row">
+				<label>遅刻早退理由</label>
+				<div class="select-wrap">
+					<select id="lateReason">
+						<option value="" selected>選択してください</option>
+						<option>現場都合</option>
+						<option>自己都合</option>
+						<option>電車遅延</option>
+						<option>契約に準ずる（変則）</option>
+						<option>時短（産育介護）</option>
+						<option>その他（その他理由を入力）</option>
+					</select>
+					<span class="select-caret"></span>
+				</div>
+			</div>
+
+			<!-- その他理由 -->
+			<div class="form-row">
+				<label>その他理由</label>
+				<input id="lateReasonOther" type="text" placeholder="遅刻早退のその他の理由を入力" disabled>
+			</div>
+
+			<!-- 遅延証明書 -->
+			<div class="form-row">
+				<label>遅延証明書</label>
+				<div class="file-field">
+					<input id="delayFile" type="file" hidden>
+					<input id="delayFileName" type="text" placeholder="" readonly>
+					<button id="btnAttach" type="button" class="icon-btn plain" aria-label="ファイルを添付">
+						<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+							<!-- 外枠（書類） -->
+							<path d="M14 3H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9l-5-6z" fill="none" stroke="currentColor"/>
+							<!-- 折り返し -->
+							<path d="M14 3v7h5" fill="none" stroke="currentColor"/>
+							<!-- 罫線 -->
+							<rect x="7" y="12" width="10" height="1.6" fill="currentColor"/>
+							<rect x="7" y="15" width="10" height="1.6" fill="currentColor"/>
+							<rect x="7" y="18" width="10" height="1.6" fill="currentColor"/>
+						</svg>
+					</button>
+				</div>
+			</div>
+
+			<!-- ボタン群（中央寄せ） -->
+			<div class="actions">
+				<div class="actions__inner">
+					<button id="btnDraft" type="button" class="btn btn-ghost">一時保存</button>
+					<button id="btnSubmit" type="button" class="btn btn-primary">登 録</button>
+					<button id="btnCancel" type="button" class="btn btn-cancel">キャンセル</button>
+				</div>
+			</div>
+
+			<!-- アラート表示領域 -->
+			<div id="alertArea" class="alert" role="alert" aria-live="polite"></div>
+
+			<!-- サマリー（表示のみ） -->
+			<section class="summary">
+				<div class="summary-row">
+					<div class="summary-item"><span>勤務時間</span><span>00:00</span></div>
+					<div class="summary-item"><span>労働時間</span><span>00:00</span></div>
+					<div class="summary-item"><span>残業時間</span><span>00:00</span></div>
+					<div class="summary-item"><span>深夜時間</span><span>00:00</span></div>
+				</div>
+				<div class="summary-row">
+					<div class="summary-item"><span>法定休日</span><span>00:00</span></div>
+					<div class="summary-item"><span>遅刻早退</span><span>00:00</span></div>
+					<div class="summary-item"><span>ステータス</span><span>未承認</span></div>
+					<div class="summary-item"><span>承認者</span><span>承認 太郎</span></div>
+				</div>
+			</section>
+		</form>
+	</main>
+
+	<!-- ===== 休憩時間入力フォーム（新） ===== -->
+	<div id="restModal" class="modal" aria-hidden="true">
+		<div class="modal__sheet" role="dialog" aria-modal="true" aria-label="休憩時間入力フォーム">
+			<div class="modal__body">
+				<div class="rest-head">
+					<div>　</div>
+					<div>休憩開始時刻</div>
+					<div>休憩終了時刻</div>
+					<div>　</div>
+				</div>
+				<div class="rest-grid" id="restRows"></div>
+				<div class="modal__actions rest-actions">
+					<button id="btnRestSave" type="button" class="btn btn-primary">登 録</button>
+					<button id="btnRestAdd" type="button" class="btn btn-ghost soft">休憩追加</button>
+					<button id="btnRestCancel" type="button" class="btn btn-cancel">キャンセル</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="./attendance.js"></script>
+</body>
+</html>

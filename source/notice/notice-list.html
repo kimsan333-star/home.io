@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>お知らせ一覧</title>
+	<link rel="stylesheet" href="./css/notice_styles.css" />
+</head>
+<body>
+	<main class="app detail" role="application">
+		<!-- Header -->
+		<header class="topbar" aria-label="ヘッダー">
+			<div class="brand">
+				<img class="brand__logo" src="./img/openup.jpg" alt="OPCポータル">
+				<span class="brand__url">OPCポータル</span>
+			</div>
+			<button class="menu-btn" id="btnMenu" aria-haspopup="dialog" aria-expanded="false" aria-controls="menuSheet">
+				<img src="data:image/svg+xml;utf8,
+					<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'>
+						<rect y='3' width='20' height='2' fill='%23777'/>
+						<rect y='9' width='20' height='2' fill='%23777'/>
+						<rect y='15' width='20' height='2' fill='%23777'/>
+					</svg>" alt="">
+			</button>
+		</header>
+		<!--div class="brandline" aria-hidden="true"></div-->
+
+		<!-- Main -->
+		<div class="main detail-main">
+			<div class="detail-scroll">
+				<ul class="notice-list" id="noticeList"></ul>
+			</div>
+
+			<div class="pager">
+				<button id="btnPrev" class="btn btn-secondary">前へ</button>
+				<div class="page-indicator" id="pageIndicator">1 / 1</div>
+				<button id="btnNext" class="btn btn-primary">次へ</button>
+			</div>
+		</div>
+	</main>
+
+	<!-- Overlay Menu（共通／イメージ準拠） -->
+	<div class="overlay" id="overlay" aria-hidden="true">
+		<div class="sheet" id="menuSheet" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
+			<header id="menuTitle">
+                <span class="emp-code" id="empCode">32129</span>
+                <span class="emp-name" id="empName">夢真 太郎</span>
+			</header>
+			<ul>
+				<li>
+					<button class="menuitem" type="button" id="miEmail">
+						<div class="menuitem-row">
+							<span class="menuicon">
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<rect x="3" y="5" width="18" height="14" rx="2"></rect>
+									<polyline points="3,7 12,13 21,7"></polyline>
+								</svg>
+							</span>
+							<span>メールアドレス設定</span>
+						</div>
+						<div class="menuitem-sub" id="empEmail">taro_yumeshin@gmail.com</div>
+					</button>
+				</li>
+				<li>
+					<button class="menuitem" type="button" id="miPassword">
+						<div class="menuitem-row">
+							<span class="menuicon">
+								<!-- ★ 鍵アイコン：丸環＋軸＋二段ギザ（より鍵らしく） -->
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<g stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="7" cy="12" r="3"></circle>
+										<path d="M10 12H20"></path>
+										<polyline points="16,12 16,15 18,15"></polyline>
+										<polyline points="19,12 19,15 21,15"></polyline>
+									</g>
+								</svg>
+							</span>
+							<span>パスワード設定</span>
+						</div>
+					</button>
+				</li>
+				<li>
+					<button class="menuitem" type="button" id="miLogout">
+						<div class="menuitem-row">
+							<span class="menuicon">
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<rect x="3" y="4" width="10" height="16" rx="2"></rect>
+									<path d="M13 12h8"></path>
+									<path d="M19 8l4 4-4 4"></path>
+								</svg>
+							</span>
+							<span>ログアウト</span>
+						</div>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<script src="./js/notice_utils.js"></script>
+	<script src="./js/overlay_menu.js"></script>
+	<script>
+		/* ダミープロフィール（実装時はAPIで置換） */
+		const PROFILE = { id:"32129", name:"夢真 太郎", email:"taro_yumeshin@gmail.com" };
+		document.getElementById('empCode').textContent = PROFILE.id;
+		document.getElementById('empName').textContent = PROFILE.name;
+		document.getElementById('empEmail').textContent = PROFILE.email;
+
+		/* ダミーお知らせ */
+		const PER_PAGE = 5;
+		const notices = [
+			{ id:1, datetime:"2025-09-11T10:00:00", title:"システムのメンテナンスのお知らせ", excerpt:"平素より社員ポータルをご利用いただき、誠にありがとうございます。以下の日程においてシステムメンテナンスを実施いたします。", unread:true },
+			{ id:2, datetime:"2025-09-10T09:30:00", title:"新機能", excerpt:"新しい機能をリリースしました。操作方法を確認してください。", unread:false },
+			{ id:3, datetime:"2025-09-09T18:15:00", title:"セキュリティ", excerpt:"セキュリティ更新を実施しました。必ず再ログインしてください。", unread:false },
+			{ id:4, datetime:"2025-09-08T10:00:00", title:"利用規約", excerpt:"利用規約を改定しました。内容をご確認ください。", unread:false },
+			{ id:5, datetime:"2025-09-07T12:00:00", title:"キャンペーン", excerpt:"秋のキャンペーンが開始されました。詳細をご確認ください。", unread:false },
+			{ id:6, datetime:"2025-09-06T08:30:00", title:"社内報", excerpt:"9月号の社内報を公開しました。", unread:false },
+			{ id:7, datetime:"2025-09-05T17:00:00", title:"月次締め", excerpt:"月次締めのスケジュールを周知します。", unread:false },
+			{ id:8, datetime:"2025-09-04T14:00:00", title:"VPN障害復旧", excerpt:"VPN障害は復旧済みです。ご協力ありがとうございました。", unread:false },
+			{ id:9, datetime:"2025-09-03T09:00:00", title:"健康診断", excerpt:"健康診断の予約受付を開始しました。", unread:false },
+			{ id:10, datetime:"2025-09-02T11:00:00", title:"備品管理", excerpt:"備品管理のルールを更新しました。", unread:false }
+		].sort((a,b)=> new Date(b.datetime)-new Date(a.datetime));
+
+		let page = 1;
+		const totalPages = Math.max(1, Math.ceil(notices.length / PER_PAGE));
+
+		// コンテンツ描画関数
+		function render() {
+			const list = document.getElementById('noticeList');
+			list.innerHTML = '';
+			const start = (page - 1)*PER_PAGE;
+			const items = notices.slice(start, start+PER_PAGE);
+
+			for(const n of items){
+				const li = document.createElement('li');
+				const a = document.createElement('a');
+				a.className = 'notice-card' + (n.unread ? ' notice-card--unread' : '');
+				a.href = `notice-detail.html?id=${encodeURIComponent(n.id)}`;
+
+				const head = document.createElement('div'); head.className = 'notice-card__head';
+				const titleEl = document.createElement('div'); titleEl.className = 'notice-card__title'; titleEl.textContent = n.title;
+				const dateEl = document.createElement('time'); dateEl.className = 'notice-card__date'; dateEl.textContent = window.ymdhm ? window.ymdhm(n.datetime) : n.datetime;
+				head.appendChild(titleEl); head.appendChild(dateEl);
+
+				const ex = document.createElement('p'); ex.className = 'notice-card__excerpt'; ex.textContent = n.excerpt;
+
+				a.appendChild(head); a.appendChild(ex); li.appendChild(a); list.appendChild(li);
+			}
+
+			document.getElementById('pageIndicator').textContent = `${page} / ${totalPages}`;
+			document.getElementById('btnPrev').disabled = page <= 1;
+			document.getElementById('btnNext').disabled = page >= totalPages;
+		}
+
+		document.getElementById('btnPrev').addEventListener('click', ()=>{ if(page>1){ page--; render(); } });
+		document.getElementById('btnNext').addEventListener('click', ()=>{ if(page<totalPages){ page++; render(); } });
+
+		// お知らせタップ時のフィードバック定義
+		const listEl = document.getElementById('noticeList');
+		listEl.addEventListener('pointerdown', e=>{ const c=e.target.closest('.notice-card'); if(c){c.classList.add('is-active');} });
+		['pointerup','pointercancel','pointerleave','pointerout'].forEach(ev=>{
+			listEl.addEventListener(ev, e=>{ const c=e.target.closest('.notice-card'); if(c){c.classList.remove('is-active');} });
+		});
+
+		// 共通オーバーレイメニュー初期化（プロフィールも反映）
+		initOverlayMenu({ profile: PROFILE });
+		
+		// コンテンツ描画開始
+		render();
+	</script>
+</body>
+</html>
